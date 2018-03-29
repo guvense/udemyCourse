@@ -103,6 +103,45 @@ router.get('/',(req,res)=>{
 
 
 
+router.delete('/:director_id',(req,res,next)=>{
+
+
+    const promise=Director.findByIdAndRemove(req.params.director_id);
+
+   promise.then((data)=>{
+
+    next({ message: 'The director was not found!' , code :1});
+      
+    res.json({status :1});
+   }).catch((err)=>{
+
+    res.json(err)
+   })
+
+
+})
+
+
+//find and update
+router.put('/:director_id',(req,res,next)=>{
+
+    const promise=Director.findByIdAndUpdate(req.params.director_id,req.body,{new :true});
+  
+    promise.then((data)=>{
+  
+      if(!data)
+        next({ message: 'The director was not found!' , code :1});
+      
+      res.json(data);
+    }).catch((err)=>{
+  
+      res.json(err)
+    })
+  
+  
+  });
+
+//get director from id
 router.get('/:director_id',(req,res)=>{
 
     //join işlemi için kullanılır

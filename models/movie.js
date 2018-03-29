@@ -7,7 +7,7 @@ const MovieSchema=new Schema({
 
     title :{
         type:String,
-        required: true
+        required: [true ,'Lütfen filmin `{PATH}` giriniz']
     
     },
     category: String,
