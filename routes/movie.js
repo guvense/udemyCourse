@@ -99,7 +99,7 @@ router.get('/',(req,res)=>{
 
 //add movie 
 router.post('/', (req, res, next) => {
-  const {title, imdb, category, country,year}=req.body;
+  const {title, imdb, category, country,year,director_id}=req.body;
 
   const movie= new Movie({
 
@@ -107,7 +107,8 @@ router.post('/', (req, res, next) => {
     imdb: imdb,
     category:category,
     country:country,
-    year:year
+    year:year,
+    director_id:director_id
 
   })
 
