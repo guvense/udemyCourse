@@ -10,11 +10,21 @@ const movie = require('./routes/movie');
 const director = require('./routes/director');
 
 
+
+
 const app = express();
 
 //db connection
 
 const db=require('./helper/db')();
+
+//Config 
+const config = require('./config');
+app.set('api_secret_key',config.api_secret_key);
+
+// Middleware 
+const verifyToken=require('./middleware/verify-token');
+
 
 
 // view engine setup
@@ -22,16 +32,21 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', index);
+app.use('/api',verifyToken);
 app.use('/api/movie', movie);
 app.use('/api/director', director);
+
+
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) =>{
